@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const WebpackShellPlugin = require('./lib');
+const WebpackSynchronizableShellPlugin = require('./lib');
 
 module.exports = {
   watch: true,
@@ -19,7 +19,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new WebpackShellPlugin({onBuildStart:['node test.js'], onBuildEnd:['echo "Webpack End"'], safe: true, verbose: true}),
+    new WebpackSynchronizableShellPlugin({onBuildStart:['node test.js'], onBuildEnd:['echo "Webpack End"'], safe: true, verbose: true}),
     new webpack.HotModuleReplacementPlugin()
   ]
 };
