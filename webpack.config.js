@@ -19,7 +19,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new WebpackSynchronizableShellPlugin({onBuildStart:['node test.js'], onBuildEnd:['echo "Webpack End"'], safe: true, verbose: true}),
+    new WebpackSynchronizableShellPlugin({onBuildStart:['node test.js'], onBuildEnd:['echo "Webpack End"'], dev: true, safe: true, verbose: true}),
     new webpack.HotModuleReplacementPlugin()
   ]
 };

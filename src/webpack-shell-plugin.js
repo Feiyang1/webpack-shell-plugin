@@ -66,7 +66,7 @@ export default class WebpackSynchronizableShellPlugin {
 
   apply(compiler) {
 
-    compiler.plugin('compilation', (compilation) => {
+    compiler.plugin('compile', (compilation) => {
       if (this.options.verbose) {
         console.log(`Report compilation: ${compilation}`);
         console.warn(`WebpackShellPlugin [${new Date()}]: Verbose is being deprecated, please remove.`);
