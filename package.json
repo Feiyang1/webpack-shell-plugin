@@ -1,6 +1,6 @@
 {
   "name": "webpack-synchronizable-shell-plugin",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Run shell commands before and after webpack builds",
   "main": "lib/index.js",
   "scripts": {
@@ -9,7 +9,8 @@
     "build": "rollup -c",
     "webpack": "webpack --progress",
     "webpack-dev-server": "webpack-dev-server --progress",
-    "lint": "eslint src/webpack-shell-plugin.js"
+    "lint": "eslint src/webpack-shell-plugin.js",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
