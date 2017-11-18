@@ -96,8 +96,6 @@ export default class WebpackSynchronizableShellPlugin {
         this.handleScriptAsync(scripts[i], blocking);
       }
     }
-
-    console.log("finished");
   }
 
   validateInput(options) {
@@ -144,7 +142,6 @@ export default class WebpackSynchronizableShellPlugin {
       const onBuildEndOption = this.options.onBuildEnd;
       if (onBuildEndOption.scripts && onBuildEndOption.scripts.length > 0) {
         console.log('Executing post-build scripts');
-        console.log(onBuildEndOption);
         this.executeScripts(onBuildEndOption.scripts, onBuildEndOption.parallel, onBuildEndOption.blocking);
         if (this.options.dev) {
           this.options.onBuildEnd = [];

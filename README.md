@@ -66,6 +66,14 @@ module.exports = {
 * `blocking (onBuildStart, onBuildEnd, onBuildExit)`: block webpack until scripts finish execution.
 * `parallel (onBuildStart, onBuildEnd, onBuildExit)`: execute scripts in parallel, otherwise execute scripts in the order in which they are specified in the scripts array.
 
+**Note:** below combination is not supported.
+ ```js
+  {
+    blocking: true
+    parallel: true
+  } 
+ ```
+
 * `dev`: switch for development environments. This causes scripts to execute once. Useful for running HMR on webpack-dev-server or webpack watch mode. **Default: true**
 * `safe`: switches script execution process from spawn to exec. If running into problems with spawn, turn this setting on. **Default: false**
 * `verbose`: **DEPRECATED** enable for verbose output. **Default: false**

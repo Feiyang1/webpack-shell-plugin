@@ -1,6 +1,6 @@
 {
   "name": "webpack-synchronizable-shell-plugin",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Run shell commands before and after webpack builds",
   "main": "lib/index.js",
   "scripts": {
