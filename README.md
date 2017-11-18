@@ -1,95 +1,71 @@
-[![npm version](https://badge.fury.io/js/webpack-shell-plugin.svg)](https://badge.fury.io/js/webpack-shell-plugin)
-![](https://reposs.herokuapp.com/?path=1337programming/webpack-shell-plugin)
-[![npm](https://img.shields.io/npm/dm/webpack-shell-plugin.svg)]()
-# Webpack Shell Plugin
+# Webpack Synchronizable Shell Plugin
+This plugin is a fork of [webpack-shell-plugin](https://github.com/1337programming/webpack-shell-plugin).
 
-This plugin allows you to run any shell commands before or after webpack builds. This will work for both webpack and webpack-dev-server.
+It differs from [webpack-shell-plugin](https://github.com/1337programming/webpack-shell-plugin) by allowing user to customize script execution order. For example, we can specify that webpack should block until user's precompile scripts finish executing. Another example is we can execute scripts in the order in which they are specified, or we can execute them in parallel. 
 
-Goes great with running cron jobs, reporting tools, or tests such as selenium, protractor, phantom, ect.
-
-## WARNING
-
-This plugin is meant for running simple command line executions. It is not meant to be a task management tool.
+The point of this plugin is to give users freedom in choosing how scripts are executed.
 
 ## Installation
 
-`npm install --save-dev webpack-shell-plugin`
+`npm install --save-dev webpack-synchronizable-shell-plugin`
 
 ## Setup
 In `webpack.config.js`:
 
 ```js
-const WebpackShellPlugin = require('webpack-shell-plugin');
+const WebpackSynchronizableShellPlugin = require('webpack-synchronizable-shell-plugin');
 
 module.exports = {
   ...
   ...
   plugins: [
-    new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildEnd:['echo "Webpack End"']})
-  ],
+    new WebpackSynchronizableShellPlugin({
+      onBuildStart:{
+        scripts: ['echo "Webpack Start"'],
+        blocking: true,
+        parallel: false
+      }, 
+      onBuildEnd:{
+        scripts: ['echo "Webpack End"'],
+        blocking: false,
+        parallel: true
+      }
+  })],
   ...
 }
 ```
 
-## Example
-
-Insert into your webpack.config.js:
-
-```js
-const WebpackShellPlugin = require('webpack-shell-plugin');
-const path = require('path');
-
-var plugins = [];
-
-plugins.push(new WebpackShellPlugin({
-  onBuildStart: ['echo "Starting"'],
-  onBuildEnd: ['python script.py && node script.js']
-}));
-
-var config = {
-  entry: {
-    app: path.resolve(__dirname, 'src/app.js')
-  },
-  output: {
-    path: path.resolve(__dirname, 'dist'), // regular webpack
-    filename: 'bundle.js'
-  },
-  devServer: {
-    contentBase: path.resolve(__dirname, 'src') // dev server
-  },
-  plugins: plugins,
-  module: {
-    loaders: [
-      {test: /\.js$/, loaders: 'babel'},
-      {test: /\.scss$/, loader: 'style!css!scss?'},
-      {test: /\.html$/, loader: 'html-loader'}
-    ]
-  }
-}
-
-module.exports = config;
-
-```
-Once the build finishes, a child process is spawned firing both a python and node script.
-
 ### API
-* `onBuildStart`: array of scripts to execute on the initial build. **Default: [ ]**
-* `onBuildEnd`: array of scripts to execute after files are emitted at the end of the compilation. **Default: [ ]**
-* `onBuildExit`: array of scripts to execute after webpack's process is complete. *Note: this event also fires in `webpack --watch` when webpack has finished updating the bundle.* **Default: [ ]**
+* `onBuildStart`: configuration object for scripts that execute before a compilation. 
+**Default:**
+```js
+  {
+    scripts: [],
+    blocking: false,
+    parallel: false
+  }
+```
+* `onBuildEnd`: configuration object for scripts that execute after files are emitted at the end of the compilation. 
+**Default:**
+```js
+  {
+    scripts: [],
+    blocking: false,
+    parallel: false
+  }
+```
+* `onBuildExit`: configuration object for scripts that execute after webpack's process is complete. *Note: this event also fires in `webpack --watch` when webpack has finished updating the bundle.*
+**Default:**
+```js
+  {
+    scripts: [],
+    blocking: false,
+    parallel: false
+  }
+```
+* `blocking (onBuildStart, onBuildEnd, onBuildExit)`: block webpack until scripts finish execution.
+* `parallel (onBuildStart, onBuildEnd, onBuildExit)`: execute scripts in parallel, otherwise execute scripts in the order in which they are specified in the scripts array.
+
 * `dev`: switch for development environments. This causes scripts to execute once. Useful for running HMR on webpack-dev-server or webpack watch mode. **Default: true**
 * `safe`: switches script execution process from spawn to exec. If running into problems with spawn, turn this setting on. **Default: false**
 * `verbose`: **DEPRECATED** enable for verbose output. **Default: false**
-
-### Developing
-
-If opening a pull request, create an issue describing a fix or feature. Have your pull request point to the issue by writing your commits with the issue number in the message.
-
-Make sure you lint your code by running `npm run lint` and you can build the library by running `npm run build`.
-
-I appreciate any feed back as well, Thanks for helping!
-
-### Other Webpack Plugins
-Also checkout our other webpack plugin [WebpackBrowserPlugin](https://github.com/1337programming/webpack-browser-plugin).
-
-### Contributions
-Yair Tavor
