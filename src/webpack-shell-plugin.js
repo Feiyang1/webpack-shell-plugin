@@ -3,7 +3,9 @@ const exec = require('child_process').exec;
 const spawnSync = require('child_process').spawnSync;
 const execSync = require('child_process').execSync;
 const os = require('os');
-require('babel-polyfill');
+if (!global._babelPolyfill) {
+  require('babel-polyfill');
+}
 
 const defaultOptions = {
   onBuildStart: {
