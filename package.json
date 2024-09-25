@@ -43,6 +43,6 @@
     "rollup": "0.25.8",
     "rollup-plugin-babel": "2.7.1",
     "style-loader": "0.13.2",
-    "webpack": "1.15.0"
+    "webpack": "5.95.0"
   }
 }
