@@ -41,7 +41,7 @@
     "css-loader": "0.23.1",
     "eslint": "2.13.1",
     "rollup": "0.25.8",
-    "rollup-plugin-babel": "2.7.1",
+    "@rollup/plugin-babel": "5.0.0",
     "style-loader": "0.13.2",
     "webpack": "1.15.0"
   }
